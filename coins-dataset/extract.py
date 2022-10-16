@@ -20,7 +20,7 @@ def loadImage(src):
 
 def findCoins(img, showCoins = False):
     scaling = 800.0/max(img.shape[0:2])
-    print scaling
+    print(scaling)
     img_gray = cv2.resize(img, None, fx=scaling, fy=scaling)
     img_gray = cv2.cvtColor(img_gray, cv2.COLOR_BGR2GRAY)
     img_gray = cv2.blur(img_gray, (5,5))
