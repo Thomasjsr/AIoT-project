@@ -5,7 +5,8 @@ from collections import Counter
 from time import time
 import tkinter.filedialog
 from tkinter import *
-
+import sys
+import gradio as gr
 
 def k_nearest_neighbors(predict, k):
     distances = []
@@ -39,21 +40,29 @@ def test():
     print(end-start)
     print(accuracy)
 
+def ia_handler(image):
+    pred = k_nearest_neighbors(img, 10)
+    if pred == 0:
+        return 'It\'s a coin'
+    return 'It\'s a banknote'
 
 def main():
-    root = Tk()
-    root.withdraw()
-    root.update()
-    filename = tkinter.filedialog.askopenfilename(title="Ouvrir fichier", filetypes=[('all files', '.*')]) # sélectionner la photo
-    src = cv2.imread(cv2.samples.findFile(filename), cv2.IMREAD_COLOR) # charger la photo
-    root.destroy()
-
-    img = resize_img(src)
-    pred = k_nearest_neighbors(img, 10)
-    if pred == '0':
-        print('Coin')
+    if len(sys.argv) > 1 and sys.argv[1] == '--cli':
+        root = Tk()
+        root.withdraw()
+        root.update()
+        filename = tkinter.filedialog.askopenfilename(title="Ouvrir fichier", filetypes=[('all files', '.*')]) # sélectionner la photo
+        src = cv2.imread(cv2.samples.findFile(filename), cv2.IMREAD_COLOR) # charger la photo
+        root.destroy()
+        img = resize_img(src)
+        pred = k_nearest_neighbors(img, 10)
+        if pred == '0':
+            print('Coin')
+        else:
+            print('Banknote')
     else:
-        print('Banknote')
+        iface = gr.Interface(fn=ia_handler, inputs="image", outputs="text")
+        iface.launch()
 
 
 def resize_img(img):
