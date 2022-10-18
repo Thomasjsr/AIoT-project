@@ -1,0 +1,4 @@
+# Python requirements.txt content: all python are any version
+opencv-python
+numpy
+gradio
