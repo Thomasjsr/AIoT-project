@@ -41,7 +41,8 @@ def test():
     print(accuracy)
 
 def ia_handler(image):
-    pred = k_nearest_neighbors(img, 10)
+    resized_img = resize_img(image)
+    pred = k_nearest_neighbors(resized_img, 10)
     if pred == 0:
         return 'It\'s a coin'
     return 'It\'s a banknote'
@@ -71,10 +72,10 @@ def resize_img(img):
     return new_img
 
 if __name__=="__main__":
-    coin_datadir_train = '../coins-dataset/classified/train'
-    coin_datadir_test = '../coins-dataset/classified/test'
-    note_datadir_train = '../banknote-dataset/classified/train'
-    note_datadir_test = '../banknote-dataset/classified/test'
+    coin_datadir_train = './coins-dataset/classified/train'
+    coin_datadir_test = './coins-dataset/classified/test'
+    note_datadir_train = './banknote-dataset/classified/train'
+    note_datadir_test = './banknote-dataset/classified/test'
 
     categories = ['1c', '2c', '5c', '10c', '20c', '50c', '1e', '2e', '5e', '10e', '20e', '50e']
     coin_index = 8
